@@ -1,5 +1,5 @@
 import { CPropImageConst } from "@/constant/product.cont";
-import { CRegFloatEn, CRegFloatFa, CRegTags } from "@/constant/regex";
+import { CRegFloatEn, CRegFloatFa, CRegStringTags, CRegTags } from "@/constant/regex";
 import {
   IClientProduct,
   IProduct,
@@ -50,8 +50,7 @@ export class FormAddProductHandler extends FetchData {
     ) {
       this.parseEnNumber();
     } else if (this.event.target.name === "tags") {
-      const tags = this.event.target.value.split(' ').join('');
-      /(#([a-zA-Z0-9\u0600-\u06FF]+_?){0,} ?)+/.test(this.event.target.value) &&
+      CRegStringTags.test(this.event.target.value) &&
         this.setData((val) => ({
           ...val,
           [this.event.target.name]: this.event.target.value,
@@ -129,7 +128,6 @@ export class FormAddProductHandler extends FetchData {
 
   private validateData(): boolean {
     const testTags = CRegTags.test(this.data.tags);
-    console.log(this.data)
     if (!testTags) {
       this.setMessage("نوع نوشتار تگ پذیرفته نیست");
       return false;
@@ -146,6 +144,7 @@ export class FormAddProductHandler extends FetchData {
       this.setMessage("اجرت خانگی از اجرت مغازه دار باید بیشتر باشد");
       return false;
     }
+    this.data.tags = this.data.tags.split(' ').join('').split('\n').join('');
     return true;
   }
 }

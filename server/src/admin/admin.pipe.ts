@@ -54,6 +54,7 @@ export class ParseIntCreateProductPipe implements PipeTransform {
         size: parseFloat(value.size),
       };
     }
+    console.log(2)
     return value;
   }
 }

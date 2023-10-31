@@ -20,6 +20,6 @@ export interface IProduct {
   size: number;
   typeSize: EProductTypeSize;
   details: string;
-  tags: string;
+  tags: string[];
   path: string;
 }

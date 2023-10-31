@@ -23,7 +23,7 @@ export class CreateProductDto {
   readonly size: number;
   readonly typeSize: EProductTypeSize;
   readonly details: string;
-  readonly tags: string;
+  readonly tags: string[];
   readonly path: string;
 }
 

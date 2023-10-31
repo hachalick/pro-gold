@@ -27,7 +27,7 @@ import {
 import { AdminService } from './admin.service';
 import { CreateProductDto, UpdateProductDto } from './admin';
 import { IReturnUploadImage } from './admin.interface';
-import { CleanObjectPipe, JoiValidationPipe } from 'src/common/pipes/common.pipe';
+import { CleanObjectPipe, JoiValidationPipe, ParseTagToArray } from 'src/common/pipes/common.pipe';
 import {
   createProductSchema,
   accurateSearchProductsSchema,
@@ -87,6 +87,7 @@ export class AdminController {
   @Post('create_product')
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(CreateProductGuard)
+  @UsePipes(ParseTagToArray)
   @UsePipes(new JoiValidationPipe(createProductSchema))
   @UsePipes(ParseIntCreateProductPipe)
   createProduct(@Body() body: CreateProductDto) {

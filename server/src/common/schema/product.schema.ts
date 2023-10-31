@@ -71,15 +71,15 @@ export const createProductSchema = Joi.object({
     .required()
     .messages({ 'any.required': 'فیلد دسته بندی وجود ندارد' }),
 
-  size: Joi.number()
-    .required()
-    .messages({ 'any.required': 'فیلد سایز وجود ندارد' }),
+  size: Joi.number().allow('').allow(null),
 
-  typeSize: Joi.string()
-    .valid(...Object.values(EProductTypeSize))
-    .required()
-    .messages({ 'any.required': 'فیلد نوع سایز وجود ندارد' }),
-  tags: Joi.string().pattern(/^(#([a-zA-Z0-9\u0600-\u06FF]+_){0,}([a-zA-Z0-9\u0600-\u06FF]+)){0,}$/).allow(''),
+  typeSize: Joi.string().valid(...Object.values(EProductTypeSize)).allow(''),
+
+  tags: Joi.string()
+    .pattern(
+      /^(#([a-zA-Z0-9\u0600-\u06FF]+_){0,}([a-zA-Z0-9\u0600-\u06FF]+)){0,}$/,
+    )
+    .allow(''),
 
   details: Joi.string().allow(''),
 
