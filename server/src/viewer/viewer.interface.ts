@@ -1,29 +1,25 @@
 /*------ body service interface ------*/
 
-import { PanelEnum } from 'src/common/enum/role.enum';
+import { ManagerEnum } from 'src/common/enum/role.enum';
 import { IReturns } from 'src/common/interface/returns.interface';
 
 export interface IOtp {
   mobile: string;
+  mobile_code: string;
 }
 
 export interface ILogin {
   mobile: string;
+  mobile_code: string;
   otp: string;
   name?: string;
+  family?: string;
   password?: string;
 }
 
 export interface ICanSignUp {
   mobile: string;
-}
-
-/*------ model interface ------*/
-
-export interface IOtpModel extends Document {
-  readonly mobile: string;
-  readonly otp: string;
-  readonly expires: number;
+  mobile_code: string;
 }
 
 /*------ returns ------*/
@@ -42,6 +38,6 @@ export interface IReturnLogin extends IReturns {
     access_token: string;
     refresh_token: string;
     name: string;
-    panel: PanelEnum;
+    panel: ManagerEnum;
   }
 }

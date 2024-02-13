@@ -30,7 +30,3 @@ export function createOtp(length: number): string {
   }
   return otp;
 }
-
-export function expiresMin(minutes: number): number {
-  return new Date().getTime() + (60000 * minutes);
-}

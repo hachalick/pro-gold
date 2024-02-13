@@ -1,14 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ViewerController } from './viewer.controller';
 import { ViewerService } from './viewer.service';
-import { DatabaseModule } from 'src/database/database.module';
-import { otpProvider } from './viewer-model.provider';
-import { userProvider } from 'src/common/provider/model.provider';
 import { JwtModule } from '@nestjs/jwt';
+import { EntityModule } from 'src/entity/entity.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { OtpEntity } from 'src/common/entities/otp.entity';
 
 @Module({
-  imports: [JwtModule.register({ global: true }), DatabaseModule],
+  imports: [
+    JwtModule.register({ global: true }),
+    EntityModule,
+  ],
   controllers: [ViewerController],
-  providers: [ViewerService, ...otpProvider, ...userProvider],
+  providers: [ViewerService],
 })
 export class ViewerModule {}

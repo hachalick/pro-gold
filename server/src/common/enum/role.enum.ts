@@ -1,4 +1,4 @@
-export enum PanelEnum {
+export enum ManagerEnum {
   ADMIN = 'ADMIN',
   MEMBER = 'MEMBER',
   TRANSFER = 'TRANSFER',

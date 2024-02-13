@@ -25,6 +25,8 @@ export enum EProductCategory {
   PIERCING = 'پیرسینگ',
   ANKLE = 'پابند',
   BROOCH = 'گل سینه',
+  BANGLE = 'النگو',
+  NECK = 'گردنی',
 }
 
 export enum EProductTypeSize {

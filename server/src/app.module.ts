@@ -2,13 +2,15 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { ViewerModule } from './viewer/viewer.module';
-import { DatabaseModule } from './database/database.module';
 import { AdminModule } from './admin/admin.module';
 import { TokenModule } from './token/token.module';
 import { MemberModule } from './member/member.module';
 import { BloggerModule } from './blogger/blogger.module';
 import { UsersModule } from './users/users.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { MysqlModule } from 'nest-mysql';
+import { EntityModule } from './entity/entity.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -21,13 +23,30 @@ import { MulterModule } from '@nestjs/platform-express';
     MulterModule.register({
       dest: '../public',
     }),
-    DatabaseModule,
+    MysqlModule.forRoot({
+      host: '127.0.0.1',
+      database: 'talajalali',
+      password: process.env.PASSWORD_MYSQL,
+      user: 'root',
+      port: 3306,
+    }),
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: '127.0.0.1',
+    //   port: 3306,
+    //   username: 'root',
+    //   password: process.env.PASSWORD_MYSQL,
+    //   database: 'testnode',
+    //   entities: ["dist/common/entities/*.entity.{ts,js}"],
+    //   synchronize: true,
+    // }),
     ViewerModule,
     AdminModule,
-    TokenModule,
-    MemberModule,
-    BloggerModule,
+    // TokenModule,
+    // MemberModule,
+    // BloggerModule,
     UsersModule,
+    EntityModule,
   ],
   providers: [],
 })

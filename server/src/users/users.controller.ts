@@ -4,49 +4,68 @@ import {
   Headers,
   HttpCode,
   HttpStatus,
+  ParseIntPipe,
   Query,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
-import { FindByIdProductGuard } from './users.guard';
+import { FindAllProductGuard, FindByIdProductGuard } from './users.guard';
 import { ObjectId } from 'mongoose';
 import { UsersService } from './users.service';
 import {
   CleanObjectPipe,
-  JoiValidationPipe,
+  JoiValidationObjectPipe,
 } from 'src/common/pipes/common.pipe';
-import { accurateSearchProductsSchema } from 'src/common/schema/product.schema';
-import { AccurateSearchProductsDto } from './users';
 import { RolesEnum } from 'src/common/enum/role.enum';
 
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
 
-  @Get('find_id_product')
+  @Get('find_product')
   @HttpCode(HttpStatus.OK)
   @UseGuards(FindByIdProductGuard)
-  findByIdProduct(@Query('id') id: ObjectId, @Headers('role') role: RolesEnum) {
+  findByIdProduct(
+    @Query('id', ParseIntPipe) id: number,
+    @Headers('role') role: RolesEnum,
+  ) {
     return this.userService.findByIdProduct(id, role);
   }
 
-  @Get('accurate_search_product')
+  @Get('find_products')
   @HttpCode(HttpStatus.OK)
-  @UsePipes(new JoiValidationPipe(accurateSearchProductsSchema))
-  @UsePipes(CleanObjectPipe)
-  accurateSearchProducts(
-    @Query() query: AccurateSearchProductsDto,
+  @UseGuards(FindAllProductGuard)
+  findAllProducts(
+    @Query('limit', ParseIntPipe) limit: number,
+    @Query('from', ParseIntPipe) from: number,
     @Headers('role') role: RolesEnum,
   ) {
-    return this.userService.accurateSearchProducts(query, role);
+    return this.userService.findAllProducts(limit, from, role);
   }
 
-  @Get('overall_search_product')
-  @HttpCode(HttpStatus.OK)
-  overallSearchProducts(
-    @Query('key') key: string,
-    @Headers('role') role: RolesEnum,
-  ) {
-    return this.userService.overallSearchProducts(key, role);
+  @Get('count_products')
+  numberOfProduct() {
+    return this.userService.numberOfProduct()
   }
+
+
+  // @Get('accurate_search_product')
+  // @HttpCode(HttpStatus.OK)
+  // @UsePipes(new JoiValidationObjectPipe(accurateSearchProductsSchema))
+  // @UsePipes(CleanObjectPipe)
+  // accurateSearchProducts(
+  //   @Query() query: AccurateSearchProductsDto,
+  //   @Headers('role') role: RolesEnum,
+  // ) {
+  //   return this.userService.accurateSearchProducts(query, role);
+  // }
+
+  // @Get('overall_search_product')
+  // @HttpCode(HttpStatus.OK)
+  // overallSearchProducts(
+  //   @Query('key') key: string,
+  //   @Headers('role') role: RolesEnum,
+  // ) {
+  //   return this.userService.overallSearchProducts(key, role);
+  // }
 }

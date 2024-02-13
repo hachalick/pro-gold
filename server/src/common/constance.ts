@@ -9,5 +9,6 @@ export const PropImageConst = {
 export const HostConst = {
   HOST : '127.0.0.1',
   PORT: 8080,
-  PROTOCOL_URL: 'http'
+  PROTOCOL_URL: 'http' ,
+  DOMAIN: 'http://localhost:8080',
 }
